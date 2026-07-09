@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>United Food Menu by Mustakim Ifaz</title>
+    <style>
+        :root {
+            --primary-red: #19f161;
+            --accent-gold: #D4AF37;
+            --bg-light: #FFF5F2;
+            --text-dark: #3A1F1F;
+            --card-bg: #FFFFFF;
+            --bkash-pink: #E2136E;
+            --pathao-red: #E9335A;
+            --success-green: #28a745;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M50 0 C60 25, 90 40, 100 50 C90 60, 60 75, 50 100 C40 75, 10 60, 0 50 C10 40, 40 25, 50 0 Z' fill='%278b263e' fill-opacity='0.03'/%3E%3C/svg%3E");
+            padding-bottom: 60px;
+        }
+
+        .top-accent {
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary-red), var(--accent-gold), var(--primary-red));
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: var(--primary-red);
+            color: #FFFFFF;
+            position: relative;
+            border-bottom: 5px solid var(--accent-gold);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 25px;
+            background-color: var(--accent-gold);
+            clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+            z-index: 10;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        header p {
+            color: var(--accent-gold);
+            font-size: 1.1rem;
+            font-style: italic;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .country-nav {
+            background-color: var(--card-bg);
+            border: 2px solid var(--primary-red);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 30px 0;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .country-nav h3 {
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            color: var(--primary-red);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .country-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .country-btn {
+            background-color: var(--bg-light);
+            border: 1px solid #E2C2C2;
+            padding: 10px 18px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            color: var(--text-dark);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .country-btn:hover {
+            background-color: var(--primary-red);
+            color: #FFFFFF;
+            border-color: var(--primary-red);
+            transform: translateY(-2px);
+        }
+
+        .country-btn.active {
+            background-color: var(--primary-red);
+            color: #FFFFFF;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+        }
+
+        .search-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border: 2px solid var(--primary-red);
+            border-radius: 25px;
+            outline: none;
+            text-align: center;
+        }
+
+        .search-box:focus {
+            box-shadow: 0 0 10px rgba(139, 38, 62, 0.25);
+        }
+
+        .menu-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .cuisine-card {
+            background: var(--card-bg);
+            border-radius: 20px 20px 10px 10px;
+            border: 1px solid rgba(139, 38, 62, 0.15);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cuisine-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(139, 38, 62, 0.15);
+        }
+
+        .cuisine-header {
+            background-color: var(--primary-red);
+            color: #FFFFFF;
+            padding: 20px 15px 30px;
+            text-align: center;
+            border-bottom: 3px solid var(--accent-gold);
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
+        }
+
+        .cuisine-header h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .cuisine-header .region-tag {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            margin-top: 4px;
+            letter-spacing: 1px;
+        }
+
+        .food-list {
+            padding: 20px 15px;
+            list-style: none;
+        }
+
+        .food-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px dashed #EED8D8;
+        }
+
+        .food-item:last-child {
+            border-bottom: none;
+        }
+
+        .dish-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #4A2525;
+            padding-right: 10px;
+        }
+
+        .dish-price {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: var(--primary-red);
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+
+        /* ADD TO CART BUTTON */
+        .add-btn {
+            background: var(--accent-gold);
+            color: var(--text-dark);
+            border: none;
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-left: 8px;
+            white-space: nowrap;
+        }
+
+        .add-btn:hover {
+            background: var(--primary-red);
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        /* FLOATING CART */
+        .cart-fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 14px 22px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(139, 38, 62, 0.4);
+            z-index: 999;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .cart-fab:hover {
+            background: #6e1d2f;
+            transform: translateY(-2px);
+        }
+
+        .cart-badge {
+            background: var(--accent-gold);
+            color: var(--text-dark);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        /* MODAL OVERLAY */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 560px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .modal-header {
+            background: var(--primary-red);
+            color: white;
+            padding: 20px 24px;
+            border-radius: 16px 16px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-size: 1.3rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.6rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        /* CART ITEMS */
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .qty-btn {
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .qty-display {
+            font-weight: bold;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .cart-item-price {
+            font-weight: bold;
+            color: var(--primary-red);
+            min-width: 80px;
+            text-align: right;
+        }
+
+        .cart-total {
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 2px solid var(--primary-red);
+            color: var(--primary-red);
+        }
+
+        .empty-cart {
+            text-align: center;
+            color: #999;
+            padding: 30px;
+            font-style: italic;
+        }
+
+        /* STEP TABS */
+        .step-tabs {
+            display: flex;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 20px;
+        }
+
+        .step-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.85rem;
+            cursor: default;
+            color: #aaa;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .step-tab.active {
+            color: var(--primary-red);
+            border-bottom-color: var(--primary-red);
+        }
+
+        .step-tab.done {
+            color: var(--success-green);
+        }
+
+        /* DELIVERY FORM */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            color: var(--text-dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-family: Georgia, serif;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-red);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        /* PATHAO DELIVERY CARD */
+        .pathao-card {
+            background: linear-gradient(135deg, #fff0f3, #fff8f0);
+            border: 2px solid var(--pathao-red);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .pathao-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .pathao-logo-icon {
+            background: var(--pathao-red);
+            color: white;
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        .pathao-logo span {
+            font-weight: bold;
+            font-size: 1rem;
+            color: var(--pathao-red);
+        }
+
+        .delivery-estimate {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .estimate-box {
+            background: white;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ffd0db;
+        }
+
+        .estimate-box .label {
+            font-size: 0.75rem;
+            color: #888;
+            margin-bottom: 4px;
+        }
+
+        .estimate-box .value {
+            font-weight: bold;
+            font-size: 1rem;
+            color: var(--pathao-red);
+        }
+
+        /* ZONE SELECTOR */
+        .zone-info {
+            background: #fff8dc;
+            border: 1px solid var(--accent-gold);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.85rem;
+            margin-top: 8px;
+        }
+
+        /* BKASH PAYMENT */
+        .bkash-card {
+            background: linear-gradient(135deg, #fff0f7, #fff);
+            border: 2px solid var(--bkash-pink);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .bkash-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .bkash-logo-icon {
+            background: var(--bkash-pink);
+            color: white;
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-weight: bold;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .bkash-logo span {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--bkash-pink);
+        }
+
+        .bkash-steps {
+            counter-reset: step;
+            list-style: none;
+            margin-bottom: 16px;
+        }
+
+        .bkash-steps li {
+            counter-increment: step;
+            padding: 8px 0 8px 36px;
+            position: relative;
+            font-size: 0.9rem;
+            border-bottom: 1px dashed #ffd0e8;
+        }
+
+        .bkash-steps li:last-child {
+            border: none;
+        }
+
+        .bkash-steps li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            background: var(--bkash-pink);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .bkash-amount-display {
+            background: var(--bkash-pink);
+            color: white;
+            border-radius: 10px;
+            padding: 14px;
+            text-align: center;
+            margin: 14px 0;
+        }
+
+        .bkash-amount-display .amount {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .bkash-amount-display .label {
+            font-size: 0.85rem;
+            opacity: 0.85;
+            margin-bottom: 4px;
+        }
+
+        .merchant-number {
+            background: #fff;
+            border: 2px dashed var(--bkash-pink);
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .merchant-number .num {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--bkash-pink);
+            letter-spacing: 2px;
+        }
+
+        .merchant-number .sub {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .trx-input-wrap {
+            position: relative;
+        }
+
+        .trx-input-wrap input {
+            padding-right: 100px;
+        }
+
+        .trx-verify-btn {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--bkash-pink);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 6px 14px;
+            font-size: 0.82rem;
+            cursor: pointer;
+        }
+
+        /* ACTION BUTTONS */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+            margin-top: 10px;
+            font-family: Georgia, serif;
+        }
+
+        .btn-primary {
+            background: var(--primary-red);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #6e1d2f;
+            transform: translateY(-1px);
+        }
+
+        .btn-bkash {
+            background: var(--bkash-pink);
+            color: white;
+        }
+
+        .btn-bkash:hover {
+            background: #c00d5c;
+            transform: translateY(-1px);
+        }
+
+        .btn-pathao {
+            background: var(--pathao-red);
+            color: white;
+        }
+
+        .btn-outline {
+            background: white;
+            color: var(--primary-red);
+            border: 2px solid var(--primary-red);
+        }
+
+        .btn-outline:hover {
+            background: var(--bg-light);
+        }
+
+        .btn-success {
+            background: var(--success-green);
+            color: white;
+        }
+
+        .btn-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        /* SUCCESS SCREEN */
+        .success-screen {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+        }
+
+        .success-screen h2 {
+            color: var(--success-green);
+            margin-bottom: 8px;
+        }
+
+        .success-screen p {
+            color: #666;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+        }
+
+        .order-id {
+            background: #f0fff4;
+            border: 2px solid var(--success-green);
+            border-radius: 10px;
+            padding: 12px;
+            margin: 16px 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--success-green);
+        }
+
+        .order-summary-box {
+            background: #fafafa;
+            border-radius: 10px;
+            padding: 14px;
+            text-align: left;
+            margin: 12px 0;
+        }
+
+        .order-summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            font-size: 0.9rem;
+        }
+
+        .order-summary-row.total {
+            font-weight: bold;
+            border-top: 1px solid #ddd;
+            padding-top: 8px;
+            margin-top: 4px;
+            color: var(--primary-red);
+        }
+
+        /* VERIFICATION STATUS */
+        .verify-status {
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.85rem;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .verify-status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .verify-status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .verify-status.loading {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            display: block;
+        }
+
+        /* STEP INDICATOR */
+        .step-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            margin-bottom: 24px;
+        }
+
+        .step-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+            border: 2px solid #ddd;
+            color: #aaa;
+            background: white;
+        }
+
+        .step-dot.active {
+            border-color: var(--primary-red);
+            color: var(--primary-red);
+        }
+
+        .step-dot.done {
+            background: var(--success-green);
+            border-color: var(--success-green);
+            color: white;
+        }
+
+        .step-line {
+            flex: 1;
+            height: 2px;
+            background: #ddd;
+            max-width: 60px;
+        }
+
+        .step-line.done {
+            background: var(--success-green);
+        }
+
+        /* DIVIDER */
+        .section-divider {
+            text-align: center;
+            margin: 16px 0;
+            color: #bbb;
+            font-size: 0.85rem;
+            position: relative;
+        }
+
+        .section-divider::before,
+        .section-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background: #ddd;
+        }
+
+        .section-divider::before {
+            left: 0;
+        }
+
+        .section-divider::after {
+            right: 0;
+        }
+
+        /* NOTICE */
+        .notice {
+            background: #fff8dc;
+            border-left: 4px solid var(--accent-gold);
+            padding: 10px 14px;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.85rem;
+            margin: 12px 0;
+            color: #6b5200;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.6rem;
+            }
+
+            .menu-dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-row {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-fab {
+                bottom: 16px;
+                right: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-accent"></div>
+
+    <header>
+        <h1>Welcome to United Food Menu by Mustakim Ifaz</h1>
+        <p>A Grand Culinary Odyssey of 50 Subcontinental Traditional Styles</p>
+    </header>
+
+    <div class="container">
+        <div class="country-nav">
+            <h3>Filter Menu by Country / Region Style</h3>
+            <div class="country-buttons">
+                <button class="country-btn active" onclick="filterCountry('all', this)">🌐 All Subcontinent</button>
+                <button class="country-btn" onclick="filterCountry('BD', this)">🇧🇩 Bangladesh</button>
+                <button class="country-btn" onclick="filterCountry('IN', this)">🇮🇳 India</button>
+                <button class="country-btn" onclick="filterCountry('PK', this)">🇵🇰 Pakistan</button>
+                <button class="country-btn" onclick="filterCountry('SL', this)">🇱🇰 Sri Lanka</button>
+                <button class="country-btn" onclick="filterCountry('NP', this)">🇳🇵 Nepal</button>
+                <button class="country-btn" onclick="filterCountry('OT', this)">👑 Royal & Regional</button>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <input type="text" id="menuSearch" class="search-box" placeholder="🔍 Search cuisine style or dish name..."
+                onkeyup="searchMenu()">
+        </div>
+
+        <div class="menu-dashboard" id="menuDashboard"></div>
+    </div>
+
+    <!-- Floating Cart Button -->
+    <button class="cart-fab" id="cartFab" onclick="openCart()">
+        🛒 View Cart <span class="cart-badge" id="cartCount">0</span>
+    </button>
+
+    <!-- ===== CART MODAL ===== -->
+    <div class="modal-overlay" id="cartModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modalTitle">🛒 Your Cart</h2>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        // ─── MENU DATA ───────────────────────────────────────────────────────────────
+        const menuData = [
+            {
+                style: "Bengali (Bangladesh)", country: "BD", tags: "kacchi ilish khichuri beef begun doi borhani",
+                items: [{ name: "Kacchi Biryani", price: 450 }, { name: "Bhuna Khichuri with Beef", price: 380 }, { name: "Sarshe Ilish", price: 350 }, { name: "Chui Jhal Beef", price: 400 }, { name: "Shorshe Begun", price: 120 }, { name: "Mishti Doi", price: 80 }, { name: "Borhani", price: 60 }]
+            },
+            {
+                style: "Dhakaiya", country: "BD", tags: "old dhaka bakarkhani morog polao seekh kebab lassi falooda",
+                items: [{ name: "Bakarkhani with Malai", price: 100 }, { name: "Dhakaiya Morog Polao", price: 360 }, { name: "Seekh Kebab Old Dhaka", price: 260 }, { name: "Shahi Tukra Old Style", price: 120 }, { name: "Beauty Lassi / Falooda", price: 110 }]
+            },
+            {
+                style: "Chittagonian", country: "BD", tags: "mezbani gosht beef chalar dal loitta shutki bhorta",
+                items: [{ name: "Mezbani Gosht (Beef)", price: 440 }, { name: "Chalar Dal Mezbani", price: 140 }, { name: "Loitta Fry", price: 180 }, { name: "Shutki Bhorta Platter", price: 160 }, { name: "Madhubhat", price: 110 }]
+            },
+            {
+                style: "Sylheti", country: "BD", tags: "satkora beef akhni pulao chunga pitha tenga tea",
+                items: [{ name: "Satkora Beef Curry", price: 420 }, { name: "Akhni Pulao", price: 360 }, { name: "Chunga Pitha", price: 140 }, { name: "Tenga Fish Curry", price: 280 }, { name: "Seven Layer Tea", price: 90 }]
+            },
+            {
+                style: "Punjabi (India)", country: "IN", tags: "butter chicken dal makhani sarson saag kulcha lassi",
+                items: [{ name: "Butter Chicken", price: 360 }, { name: "Dal Makhani", price: 220 }, { name: "Sarson ka Saag & Makki di Roti", price: 250 }, { name: "Amritsari Kulcha", price: 120 }, { name: "Sweet Lassi", price: 90 }]
+            },
+            {
+                style: "Punjabi (Pakistan)", country: "PK", tags: "lahori karahi paya murgh cholay seekh kebab naan lassi",
+                items: [{ name: "Lahori Lahme Karahi", price: 450 }, { name: "Paya Curry", price: 320 }, { name: "Murgh Cholay", price: 200 }, { name: "Seekh Kebab", price: 280 }, { name: "Namkeen Lassi", price: 80 }]
+            },
+            {
+                style: "Hyderabadi", country: "IN", tags: "biryani haleem mirchi salan meetha khubani",
+                items: [{ name: "Hyderabadi Mutton Biryani", price: 480 }, { name: "Haleem", price: 250 }, { name: "Mirchi ka Salan", price: 140 }, { name: "Double ka Meetha", price: 100 }, { name: "Khubani ka Meetha", price: 120 }]
+            },
+            {
+                style: "Lucknowi (Awadhi)", country: "IN", tags: "galouti tunday kebab biryani sheermal shahi tukda",
+                items: [{ name: "Galouti Kebab", price: 350 }, { name: "Tunday Kebab", price: 320 }, { name: "Awadhi Mutton Biryani", price: 460 }, { name: "Sheermal", price: 90 }, { name: "Shahi Tukda", price: 110 }]
+            },
+            {
+                style: "Sindhi", country: "PK", tags: "sindhi biryani kadhi chawal sai bhaji dal pakwan thadal",
+                items: [{ name: "Sindhi Biryani", price: 420 }, { name: "Sindhi Kadhi Chawal", price: 220 }, { name: "Sai Bhaji", price: 180 }, { name: "Dal Pakwan", price: 160 }, { name: "Thadal Drink", price: 90 }]
+            },
+            {
+                style: "Pathani (Pashtun)", country: "PK", tags: "chapli kebab kabuli pulao shinwari karahi dampukht kahwa",
+                items: [{ name: "Chapli Kebab", price: 300 }, { name: "Kabuli Pulao", price: 440 }, { name: "Shinwari Lamb Karahi", price: 550 }, { name: "Dampukht Mutton", price: 580 }, { name: "Green Tea (Kahwa)", price: 40 }]
+            },
+            {
+                style: "Kashmiri", country: "OT", tags: "rogan josh gushtaba yakhni pulao dum aloo kahwa",
+                items: [{ name: "Rogan Josh", price: 420 }, { name: "Gushtaba", price: 450 }, { name: "Yakhni Pulao", price: 380 }, { name: "Dum Olav (Aloo)", price: 200 }, { name: "Kashmiri Kahwa", price: 60 }]
+            },
+            {
+                style: "Mughlai", country: "OT", tags: "murgh musallam paratha boti rezala shahi zafrani",
+                items: [{ name: "Murgh Musallam", price: 650 }, { name: "Mughlai Paratha", price: 180 }, { name: "Boti Kebab", price: 340 }, { name: "Rezala Curry", price: 360 }, { name: "Zafrani Sharbat", price: 90 }]
+            },
+            {
+                style: "Bengali (West Bengal)", country: "IN", tags: "kosha mangsho daab chingri alu posto luchi roshogolla",
+                items: [{ name: "Kosha Mangsho", price: 380 }, { name: "Daab Chingri", price: 420 }, { name: "Alu Posto", price: 140 }, { name: "Luchi with Alur Dom", price: 150 }, { name: "Roshogolla", price: 60 }]
+            },
+            {
+                style: "Goan", country: "IN", tags: "fish curry pork vindaloo xacuti bebinca dodol",
+                items: [{ name: "Goan Fish Curry", price: 380 }, { name: "Pork Vindaloo", price: 400 }, { name: "Chicken Xacuti", price: 360 }, { name: "Bebinca Dessert", price: 150 }]
+            },
+            {
+                style: "Gujarati", country: "IN", tags: "dhokla khandvi thali thepla undhiyu shrikhand chaash",
+                items: [{ name: "Dhokla", price: 100 }, { name: "Khandvi", price: 110 }, { name: "Gujarati Thali Combo", price: 350 }, { name: "Thepla with Achar", price: 120 }, { name: "Shrikhand", price: 100 }]
+            },
+            {
+                style: "Maharashtrian", country: "IN", tags: "vada pav misal puran poli pav bhaji modak solkadhi",
+                items: [{ name: "Vada Pav", price: 60 }, { name: "Misal Pav", price: 130 }, { name: "Puran Poli", price: 100 }, { name: "Pav Bhaji", price: 160 }, { name: "Solkadhi", price: 70 }]
+            },
+            {
+                style: "Chettinad", country: "IN", tags: "chicken curry mutton chukka idiyappam paya meals",
+                items: [{ name: "Chettinad Chicken Curry", price: 350 }, { name: "Mutton Chukka", price: 390 }, { name: "Idiyappam with Paya", price: 220 }, { name: "Vetiya Menu Meals", price: 300 }]
+            },
+            {
+                style: "Malabari (Kerala)", country: "IN", tags: "beef fry parotta chicken fish biryani thalassery payasam",
+                items: [{ name: "Malabar Beef Fry", price: 320 }, { name: "Kerala Parotta with Chicken", price: 240 }, { name: "Karimeen Pollichathu", price: 450 }, { name: "Thalassery Biryani", price: 380 }]
+            },
+            {
+                style: "Rajasthani", country: "IN", tags: "dal baati churma laal maas gatte kachori ghevar",
+                items: [{ name: "Dal Baati Churma", price: 320 }, { name: "Laal Maas (Mutton)", price: 450 }, { name: "Gatte ki Sabzi", price: 200 }, { name: "Pyaz Kachori", price: 80 }, { name: "Ghevar Sweet", price: 150 }]
+            },
+            {
+                style: "Balochi", country: "PK", tags: "sajji karahi khaddi kebab kaak bread halwa",
+                items: [{ name: "Sajji (Chicken)", price: 500 }, { name: "Balochi Mutton Karahi", price: 550 }, { name: "Khaddi Kebab", price: 600 }, { name: "Balochi Kaak Bread", price: 90 }]
+            },
+            {
+                style: "Memon", country: "PK", tags: "khausa akhni pulao dhoka fried fish gur papdi",
+                items: [{ name: "Memon Khausa", price: 320 }, { name: "Akhni (Beef Pulao)", price: 350 }, { name: "Dhoka Curry", price: 200 }, { name: "Fried Fish Memon Style", price: 340 }]
+            },
+            {
+                style: "Bihari", country: "IN", tags: "litti chokha kabab ahuna mutton sattu sharbat malpua",
+                items: [{ name: "Litti Chokha", price: 160 }, { name: "Bihari Kabab", price: 280 }, { name: "Ahuna Mutton Handi", price: 460 }, { name: "Sattu Sharbat", price: 60 }]
+            },
+            {
+                style: "Odia", country: "IN", tags: "dalma pakhala chhena poda prawn jhola machha ghanta",
+                items: [{ name: "Dalma", price: 150 }, { name: "Pakhala Bhata Combo", price: 220 }, { name: "Chhena Poda", price: 120 }, { name: "Chingudi Jhola (Prawn)", price: 360 }]
+            },
+            {
+                style: "Assamese", country: "IN", tags: "masor tenga duck curry pitika khar pitha tea",
+                items: [{ name: "Masor Tenga (Sour Fish)", price: 260 }, { name: "Duck Meat Curry", price: 380 }, { name: "Alloo Pitika", price: 90 }, { name: "Assam Orthodox Tea", price: 50 }]
+            },
+            {
+                style: "Naga", country: "IN", tags: "smoked pork bamboo shoot ghost pepper axone sticky rice",
+                items: [{ name: "Smoked Pork Bamboo Shoot", price: 420 }, { name: "Naga Ghost Pepper Chicken", price: 360 }, { name: "Axone Curry", price: 250 }, { name: "Sticky Rice Cakes", price: 110 }]
+            },
+            {
+                style: "Sri Lankan (Jaffna)", country: "SL", tags: "jaffna crab curry mutton roll hoppers sodhi watalappan",
+                items: [{ name: "Jaffna Crab Curry", price: 490 }, { name: "Mutton Roll", price: 140 }, { name: "String Hoppers with Sodhi", price: 180 }, { name: "Watalappan", price: 120 }]
+            },
+            {
+                style: "Sri Lankan (Sinhalese)", country: "SL", tags: "fish ambul thiyal kottu roti hoppers appam ceylon tea",
+                items: [{ name: "Fish Ambul Thiyal", price: 360 }, { name: "Kottu Roti (Chicken)", price: 260 }, { name: "Egg Hoppers (Appam)", price: 120 }, { name: "Ceylon Black Tea", price: 50 }]
+            },
+            {
+                style: "Nepali (Newari)", country: "NP", tags: "buff momo choila samay baji bara chatamari yomari",
+                items: [{ name: "Buff Momo (Steamed)", price: 180 }, { name: "Choila (Spiced Meat)", price: 240 }, { name: "Samay Baji Platter", price: 320 }, { name: "Chatamari (Nepali Pizza)", price: 160 }]
+            },
+            {
+                style: "Nepali (Thakali)", country: "NP", tags: "thakali mutton thali dhindo combo gundruk sukuti chia",
+                items: [{ name: "Thakali Mutton Thali", price: 380 }, { name: "Dhindo Combo", price: 260 }, { name: "Sukuti (Dried Meat)", price: 280 }, { name: "Masala Chia", price: 50 }]
+            },
+            {
+                style: "Dakhni (Deccan Muslim)", country: "OT", tags: "chakna gosht bagara khana dalcha gil-e-firdous",
+                items: [{ name: "Chakna Curry", price: 220 }, { name: "Tala Hua Gosht", price: 340 }, { name: "Bagara Khana with Dalcha", price: 260 }, { name: "Gil-e-Firdous", price: 120 }]
+            },
+            {
+                style: "Bohra", country: "OT", tags: "thal roast chicken samosa bohri biryani kari chawal kalamra",
+                items: [{ name: "Bohra Thal Roast Chicken", price: 400 }, { name: "Smoked Keema Samosa", price: 160 }, { name: "Bohri Biryani", price: 440 }, { name: "Kalamra Dessert", price: 100 }]
+            },
+            {
+                style: "Parsi", country: "IN", tags: "dhansak patra ni machhi sali boti akuri custard raspberry",
+                items: [{ name: "Dhansak (Mutton)", price: 390 }, { name: "Patra ni Machhi", price: 420 }, { name: "Sali Boti", price: 360 }, { name: "Lagana nu Custard", price: 130 }]
+            },
+            {
+                style: "Anglo-Indian", country: "OT", tags: "railway mutton curry country captain dak bungalow jhal frezi",
+                items: [{ name: "Railway Mutton Curry", price: 380 }, { name: "Country Captain Chicken", price: 340 }, { name: "Dak Bungalow Chicken", price: 360 }, { name: "Ginger Beer (Non-Alc)", price: 80 }]
+            },
+            {
+                style: "Konkani", country: "IN", tags: "malvani fish fry kombdi vade solkadhi patholi",
+                items: [{ name: "Malvani Fish Fry", price: 320 }, { name: "Kombdi Vade", price: 280 }, { name: "Solkadhi Platter", price: 100 }, { name: "Patholi", price: 110 }]
+            },
+            {
+                style: "Mangalorean", country: "IN", tags: "kori rotti fish curry chicken ghee roast neer dosa coffee",
+                items: [{ name: "Kori Rotti", price: 300 }, { name: "Mangalorean Fish Curry", price: 350 }, { name: "Chicken Ghee Roast", price: 380 }, { name: "Filter Coffee", price: 60 }]
+            },
+            {
+                style: "Rajyalaseema", country: "IN", tags: "ragi sangati natu kodi gongura mutton alasanda vada",
+                items: [{ name: "Ragi Sangati Platter", price: 340 }, { name: "Gongura Mutton", price: 380 }, { name: "Alasanda Vada", price: 120 }]
+            },
+            {
+                style: "Andhra (Coastal)", country: "IN", tags: "chilli chicken prawns royyala gongura pachadi pesarattu",
+                items: [{ name: "Andhra Chilli Chicken", price: 320 }, { name: "Royyala Iguru (Prawns)", price: 400 }, { name: "Gongura Pachadi Rice", price: 160 }, { name: "Pootharekulu Sweet", price: 120 }]
+            },
+            {
+                style: "Kannadiga (Udupi)", country: "IN", tags: "masala dosa bisi bele bhath idli vada sambhar mysore pak",
+                items: [{ name: "Udupi Masala Dosa", price: 110 }, { name: "Bisi Bele Bhath", price: 160 }, { name: "Idli Vada Sambhar Platter", price: 120 }, { name: "Mysore Pak", price: 90 }]
+            },
+            {
+                style: "Tamil Brahmin", country: "IN", tags: "sambar sadham rasam rice kootu poriyal curd rice payasam",
+                items: [{ name: "Sambar Sadham", price: 140 }, { name: "Rasam Rice Platter", price: 130 }, { name: "Kootu & Poriyal Meals", price: 200 }, { name: "Thayir Sadham (Curd Rice)", price: 110 }]
+            },
+            {
+                style: "Himachali (Pahari)", country: "IN", tags: "dham feast madra chha gosht siddu mittha",
+                items: [{ name: "Dham Feast Combo", price: 350 }, { name: "Madra (Chickpeas Yogurt)", price: 180 }, { name: "Chha Gosht (Mutton)", price: 400 }, { name: "Siddu with Ghee", price: 120 }]
+            },
+            {
+                style: "Garhwali & Kumaoni", country: "IN", tags: "aloo gutke kafuli phaanu bhang chutney jhangora kheer",
+                items: [{ name: "Aloo ke Gutke", price: 130 }, { name: "Kafuli (Green Curry)", price: 160 }, { name: "Phaanu Curry", price: 180 }, { name: "Jhangora ki Kheer", price: 100 }]
+            },
+            {
+                style: "Haryanvi", country: "IN", tags: "kachri sabzi bajra khichri bathua raita lassi gond ladoo",
+                items: [{ name: "Kachri ki Sabzi", price: 150 }, { name: "Bajra Khichri Ghee", price: 160 }, { name: "Bathua Raita Platter", price: 90 }, { name: "Heavy Shahi Lassi", price: 100 }]
+            },
+            {
+                style: "Kutchi", country: "IN", tags: "dabeli khichdi ringan oro mesub gulab sharbat",
+                items: [{ name: "Kutchi Dabeli", price: 80 }, { name: "Kutchi Khichdi Combo", price: 180 }, { name: "Ringan No Oro", price: 160 }, { name: "Mesub Sweet", price: 120 }]
+            },
+            {
+                style: "Malwani", country: "IN", tags: "prawns masala mori shark modak sol kadhi thalipeeth",
+                items: [{ name: "Malwani Prawns Masala", price: 390 }, { name: "Mori Curry (Shark)", price: 400 }, { name: "Ukdiche Modak", price: 120 }, { name: "Sol Kadhi Spice", price: 70 }]
+            },
+            {
+                style: "Coorgi (Kodava)", country: "IN", tags: "pandhi curry rice balls noolputtu chicken coorg coffee",
+                items: [{ name: "Pandhi Curry Style", price: 380 }, { name: "Kadambuttu (Rice Balls)", price: 120 }, { name: "Noolputtu with Chicken", price: 320 }, { name: "Coorg Coffee", price: 70 }]
+            },
+            {
+                style: "Tripuri", country: "IN", tags: "mui borok berma fish chakhwi gudok mosdeng rice beer",
+                items: [{ name: "Mui Borok Fish Platter", price: 300 }, { name: "Chakhwi Stew", price: 220 }, { name: "Gudok Mashed Platter", price: 180 }, { name: "Mosdeng Chutney", price: 120 }]
+            },
+            {
+                style: "Manipuri", country: "IN", tags: "eromba kangshoi singju sana thongba chahao kheer",
+                items: [{ name: "Eromba Platter", price: 240 }, { name: "Kangshoi (Stew)", price: 180 }, { name: "Sana Thongba (Paneer)", price: 260 }, { name: "Chahao Kheer (Black Rice)", price: 130 }]
+            },
+            {
+                style: "Marwari", country: "IN", tags: "ker sangri papad sabzi khichda moong dal halwa rabdi chach",
+                items: [{ name: "Ker Sangri Ker", price: 240 }, { name: "Papad ki Sabzi", price: 160 }, { name: "Marwari Khichda", price: 180 }, { name: "Moong Dal Halwa", price: 120 }]
+            },
+            {
+                style: "Balti", country: "PK", tags: "balti chicken karahi mutton curry grill kebab apricot halwa",
+                items: [{ name: "Balti Chicken Karahi", price: 380 }, { name: "Balti Mutton Curry", price: 450 }, { name: "Balti Mix Grill Kebab", price: 490 }, { name: "Apricot Halwa", price: 130 }]
+            },
+            {
+                style: "Maldivian (Dhivehi)", country: "OT", tags: "garudhiya fish broth rice mas huni roshi kilu curry",
+                items: [{ name: "Garudhiya Broth Rice", price: 340 }, { name: "Mas Huni with Roshi", price: 220 }, { name: "Kilu Fish Curry", price: 360 }, { name: "Dhonkeyu Kajuru", price: 100 }]
+            }
+        ];
+
+        // ─── CART STATE ───────────────────────────────────────────────────────────────
+        let cart = {};   // { dishName: { price, qty, cuisine } }
+        let currentFilter = 'all';
+        let currentStep = 'cart';  // cart | delivery | payment | success
+
+        // Pathao delivery zones
+        const PATHAO_ZONES = {
+            "Dhaka City (Within)": 60,
+            "Dhaka City (Outer Ring)": 80,
+            "Gazipur": 100,
+            "Narayanganj": 100,
+            "Savar / Ashulia": 120,
+            "Narsingdi": 140,
+            "Manikganj": 160,
+            "Outside Dhaka (Other Districts)": 200
+        };
+
+        // ─── RENDER MENU ──────────────────────────────────────────────────────────────
+        function displayMenu() {
+            const dashboard = document.getElementById('menuDashboard');
+            dashboard.innerHTML = '';
+            menuData.forEach(section => {
+                if (currentFilter !== 'all' && section.country !== currentFilter) return;
+                const card = document.createElement('div');
+                card.className = 'cuisine-card';
+                card.setAttribute('data-tags', `${section.style.toLowerCase()} ${section.tags}`);
+                const flags = { BD: '🇧🇩', IN: '🇮🇳', PK: '🇵🇰', SL: '🇱🇰', NP: '🇳🇵', OT: '👑' };
+                const flag = flags[section.country] || '🌐';
+                const rows = section.items.map(item => `
+            <li class="food-item">
+                <span class="dish-name">${item.name}</span>
+                <span style="display:flex;align-items:center;gap:4px">
+                    <span class="dish-price">৳${item.price}</span>
+                    <button class="add-btn" onclick="addToCart('${item.name.replace(/'/g, "\\'")}',${item.price},'${section.style.replace(/'/g, "\\'")}')">+ Add</button>
+                </span>
+            </li>`).join('');
+                card.innerHTML = `
+            <div class="cuisine-header">
+                <h2>${flag} ${section.style}</h2>
+                <div class="region-tag">Authentic Traditional Menu</div>
+            </div>
+            <ul class="food-list">${rows}</ul>`;
+                dashboard.appendChild(card);
+            });
+        }
+
+        function filterCountry(code, btn) {
+            currentFilter = code;
+            document.querySelectorAll('.country-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('menuSearch').value = '';
+            displayMenu();
+        }
+
+        function searchMenu() {
+            const q = document.getElementById('menuSearch').value.toLowerCase();
+            document.querySelectorAll('.cuisine-card').forEach(card => {
+                card.style.display = card.getAttribute('data-tags').includes(q) ? 'block' : 'none';
+            });
+        }
+
+        // ─── CART LOGIC ───────────────────────────────────────────────────────────────
+        function addToCart(name, price, cuisine) {
+            if (cart[name]) { cart[name].qty++; }
+            else { cart[name] = { price, qty: 1, cuisine }; }
+            updateCartBadge();
+            showAddFeedback(name);
+        }
+
+        function changeQty(name, delta) {
+            if (!cart[name]) return;
+            cart[name].qty += delta;
+            if (cart[name].qty <= 0) delete cart[name];
+            updateCartBadge();
+            if (currentStep === 'cart') renderCartStep();
+        }
+
+        function updateCartBadge() {
+            const total = Object.values(cart).reduce((s, i) => s + i.qty, 0);
+            document.getElementById('cartCount').textContent = total;
+            document.getElementById('cartFab').style.display = total > 0 ? 'flex' : 'none';
+        }
+
+        function showAddFeedback(name) {
+            // Flash the fab button
+            const fab = document.getElementById('cartFab');
+            fab.style.background = '#28a745';
+            setTimeout(() => fab.style.background = '', 400);
+        }
+
+        function cartSubtotal() {
+            return Object.values(cart).reduce((s, i) => s + i.price * i.qty, 0);
+        }
+
+        // ─── MODAL CONTROL ───────────────────────────────────────────────────────────
+        function openCart() {
+            currentStep = 'cart';
+            document.getElementById('cartModal').classList.add('open');
+            renderCartStep();
+        }
+
+        function closeModal() {
+            document.getElementById('cartModal').classList.remove('open');
+        }
+
+        document.getElementById('cartModal').addEventListener('click', e => {
+            if (e.target === document.getElementById('cartModal')) closeModal();
+        });
+
+        // ─── STEP INDICATOR HTML ─────────────────────────────────────────────────────
+        function stepIndicatorHTML(active) {
+            const steps = ['cart', 'delivery', 'payment'];
+            const labels = ['Cart', 'Delivery', 'Payment'];
+            let html = '<div class="step-indicator">';
+            steps.forEach((s, i) => {
+                const isDone = steps.indexOf(active) > i;
+                const isActive = s === active;
+                html += `<div class="step-dot ${isDone ? 'done' : isActive ? 'active' : ''}">${isDone ? '✓' : (i + 1)}</div>`;
+                if (i < steps.length - 1) html += `<div class="step-line ${isDone ? 'done' : ''}"></div>`;
+            });
+            html += '</div>';
+            return html;
+        }
+
+        // ─── CART STEP ────────────────────────────────────────────────────────────────
+        function renderCartStep() {
+            document.getElementById('modalTitle').textContent = '🛒 Your Cart';
+            const keys = Object.keys(cart);
+            if (keys.length === 0) {
+                document.getElementById('modalBody').innerHTML = `
+            ${stepIndicatorHTML('cart')}
+            <div class="empty-cart">🍽️ Your cart is empty!<br>Add some delicious dishes from the menu.</div>`;
+                return;
+            }
+            let rows = keys.map(name => {
+                const it = cart[name];
+                return `<div class="cart-item">
+            <div>
+                <div class="cart-item-name">${name}</div>
+                <div style="font-size:0.8rem;color:#888">${it.cuisine}</div>
+            </div>
+            <div class="cart-item-controls">
+                <button class="qty-btn" onclick="changeQty('${name.replace(/'/g, "\\'")}', -1)">−</button>
+                <span class="qty-display">${it.qty}</span>
+                <button class="qty-btn" onclick="changeQty('${name.replace(/'/g, "\\'")}', 1)">+</button>
+                <span class="cart-item-price">৳${it.price * it.qty}</span>
+            </div>
+        </div>`;
+            }).join('');
+
+            document.getElementById('modalBody').innerHTML = `
+        ${stepIndicatorHTML('cart')}
+        ${rows}
+        <div class="cart-total">Subtotal: ৳${cartSubtotal()}</div>
+        <button class="btn btn-primary" onclick="goToDelivery()">📦 Proceed to Delivery →</button>`;
+        }
+
+        // ─── DELIVERY STEP ────────────────────────────────────────────────────────────
+        let selectedZone = '';
+        let deliveryCharge = 80;
+
+        function goToDelivery() {
+            if (Object.keys(cart).length === 0) return;
+            currentStep = 'delivery';
+            document.getElementById('modalTitle').textContent = '📦 Delivery Details';
+            const zoneOptions = Object.entries(PATHAO_ZONES).map(([z, c]) =>
+                `<option value="${z}" data-charge="${c}">${z} — ৳${c}</option>`).join('');
+            document.getElementById('modalBody').innerHTML = `
+        ${stepIndicatorHTML('delivery')}
+        <div class="pathao-card">
+            <div class="pathao-logo">
+                <div class="pathao-logo-icon">PATHAO</div>
+                <span>Pathao Courier Delivery</span>
+            </div>
+            <div class="delivery-estimate">
+                <div class="estimate-box"><div class="label">Est. Delivery Time</div><div class="value">45–90 min</div></div>
+                <div class="estimate-box"><div class="label">Tracking</div><div class="value">Live GPS</div></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Full Name *</label>
+            <input type="text" id="del_name" placeholder="Your full name">
+        </div>
+        <div class="form-group">
+            <label>Phone Number *</label>
+            <input type="tel" id="del_phone" placeholder="01XXXXXXXXX">
+        </div>
+        <div class="form-group">
+            <label>Delivery Zone *</label>
+            <select id="del_zone" onchange="updateDeliveryZone(this)">
+                <option value="">-- Select your zone --</option>
+                ${zoneOptions}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Full Address *</label>
+            <textarea id="del_address" rows="2" placeholder="House/Flat no., Road, Area, Thana..."></textarea>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>District</label>
+                <input type="text" id="del_district" placeholder="e.g. Dhaka">
+            </div>
+            <div class="form-group">
+                <label>Landmark (Optional)</label>
+                <input type="text" id="del_landmark" placeholder="Near mosque, school...">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Order Notes (Optional)</label>
+            <input type="text" id="del_notes" placeholder="Extra spicy, no onion, etc.">
+        </div>
+        <div id="zoneInfo" class="zone-info" style="display:none"></div>
+
+        <div class="order-summary-box" id="deliverySummary"></div>
+        <div class="btn-row">
+            <button class="btn btn-outline" onclick="openCart()">← Back to Cart</button>
+            <button class="btn btn-pathao" onclick="goToPayment()">💳 Go to Payment →</button>
+        </div>`;
+            updateDeliverySummary();
+        }
+
+        function updateDeliveryZone(sel) {
+            const opt = sel.options[sel.selectedIndex];
+            if (!opt.value) { selectedZone = ''; return; }
+            selectedZone = opt.value;
+            deliveryCharge = parseInt(opt.getAttribute('data-charge'));
+            document.getElementById('zoneInfo').style.display = 'block';
+            document.getElementById('zoneInfo').innerHTML =
+                `🛵 <strong>Pathao rider</strong> will deliver to <strong>${selectedZone}</strong> — Delivery charge: <strong>৳${deliveryCharge}</strong>`;
+            updateDeliverySummary();
+        }
+
+        function updateDeliverySummary() {
+            const sub = cartSubtotal();
+            const total = sub + deliveryCharge;
+            const el = document.getElementById('deliverySummary');
+            if (!el) return;
+            el.innerHTML = `
+        <div class="order-summary-row"><span>Food Subtotal</span><span>৳${sub}</span></div>
+        <div class="order-summary-row"><span>Pathao Delivery</span><span>৳${deliveryCharge}</span></div>
+        <div class="order-summary-row total"><span>Total Payable</span><span>৳${total}</span></div>`;
+        }
+
+        function goToPayment() {
+            const name = document.getElementById('del_name').value.trim();
+            const phone = document.getElementById('del_phone').value.trim();
+            const zone = document.getElementById('del_zone').value;
+            const address = document.getElementById('del_address').value.trim();
+            if (!name || !phone || !zone || !address) {
+                alert('⚠️ Please fill in all required fields (Name, Phone, Zone, Address).');
+                return;
+            }
+            if (!/^01[0-9]{9}$/.test(phone)) {
+                alert('⚠️ Please enter a valid Bangladeshi phone number (e.g. 01XXXXXXXXX).');
+                return;
+            }
+            renderPaymentStep();
+        }
+
+        // ─── PAYMENT STEP ────────────────────────────────────────────────────────────
+        function renderPaymentStep() {
+            currentStep = 'payment';
+            document.getElementById('modalTitle').textContent = '💳 bKash Payment';
+            const total = cartSubtotal() + deliveryCharge;
+            const orderId = 'RFC' + Date.now().toString().slice(-8);
+
+            document.getElementById('modalBody').innerHTML = `
+        ${stepIndicatorHTML('payment')}
+        <div class="notice">
+            📌 This uses the <strong>bKash Merchant Payment</strong> flow. Send payment to the number below, then enter your Transaction ID.
+        </div>
+        <div class="bkash-card">
+            <div class="bkash-logo">
+                <div class="bkash-logo-icon">bKash</div>
+                <span>bKash Merchant Payment</span>
+            </div>
+            <div class="bkash-amount-display">
+                <div class="label">Total Amount to Pay</div>
+                <div class="amount">৳${total}</div>
+                <div style="font-size:0.8rem;opacity:0.8;margin-top:4px">Order Ref: ${orderId}</div>
+            </div>
+            <div class="merchant-number">
+                <div class="sub">Send to Merchant bKash Number</div>
+                <div class="num">01XXXXXXXXX</div>
+                <div class="sub" style="margin-top:4px">Account Type: <strong>Merchant</strong></div>
+            </div>
+            <ul class="bkash-steps">
+                <li>Open your <strong>bKash app</strong> → tap <strong>Send Money</strong> or <strong>Payment</strong></li>
+                <li>Enter merchant number <strong>01XXXXXXXXX</strong></li>
+                <li>Enter amount <strong>৳${total}</strong> exactly</li>
+                <li>Use Reference: <strong>${orderId}</strong></li>
+                <li>Complete payment and copy the <strong>TrxID</strong></li>
+            </ul>
+            <div class="form-group">
+                <label>bKash Transaction ID (TrxID) *</label>
+                <div class="trx-input-wrap">
+                    <input type="text" id="trxInput" placeholder="e.g. ABC1234XYZ" style="text-transform:uppercase"
+                        oninput="this.value=this.value.toUpperCase();resetVerify()">
+                    <button class="trx-verify-btn" onclick="verifyTrxID('${orderId}', ${total})">Verify</button>
+                </div>
+                <div class="verify-status" id="verifyStatus"></div>
+            </div>
+        </div>
+        <div class="btn-row">
+            <button class="btn btn-outline" onclick="goToDelivery()">← Back</button>
+            <button class="btn btn-bkash" id="confirmBtn" onclick="confirmOrder('${orderId}', ${total})" disabled style="opacity:0.5">
+                ✅ Confirm Order
+            </button>
+        </div>`;
+        }
+
+        function resetVerify() {
+            document.getElementById('verifyStatus').className = 'verify-status';
+            document.getElementById('verifyStatus').textContent = '';
+            document.getElementById('confirmBtn').disabled = true;
+            document.getElementById('confirmBtn').style.opacity = '0.5';
+        }
+
+        // bKash Merchant Payment API integration
+        // Replace BKASH_APP_KEY, BKASH_APP_SECRET, BKASH_USERNAME, BKASH_PASSWORD with your real credentials
+        async function verifyTrxID(orderId, total) {
+            const trxId = document.getElementById('trxInput').value.trim();
+            if (trxId.length < 8) { showVerifyStatus('error', '❌ Please enter a valid TrxID (minimum 8 characters).'); return; }
+
+            showVerifyStatus('loading', '⏳ Verifying with bKash...');
+
+            // ── REAL bKash MERCHANT API FLOW ──────────────────────────────────────────
+            // Step 1: Grant Token
+            // POST https://tokenized.sandbox.bka.sh/v1.2.0-beta/tokenized/checkout/token/grant
+            // Headers: username, password, Content-Type: application/json
+            // Body: { app_key, app_secret }
+            // → returns { id_token, refresh_token }
+            //
+            // Step 2: Search Transaction
+            // GET https://tokenized.sandbox.bka.sh/v1.2.0-beta/tokenized/checkout/general/searchTransaction?trxID={trxId}
+            // Headers: Authorization: id_token, X-APP-Key: app_key
+            // → returns { transactionStatus, amount, trxID, ... }
+            //
+            // ⚠️ NOTE: bKash API must be called from a BACKEND SERVER (Node.js / PHP / Python)
+            //    because it requires your secret credentials. Never call directly from browser JS.
+            //    Replace the simulation below with a fetch() to your backend endpoint.
+            // ─────────────────────────────────────────────────────────────────────────
+
+            // BACKEND ENDPOINT EXAMPLE (implement on your server):
+            // POST /api/verify-bkash  →  { trxId, expectedAmount: total, orderId }
+            // Your server verifies and returns { verified: true/false, message }
+
+            // --- SIMULATION (remove when backend is ready) ---
+            await new Promise(r => setTimeout(r, 1800));
+            const isValid = trxId.length >= 8; // Replace with real API call result
+            // --- END SIMULATION ---
+
+            if (isValid) {
+                showVerifyStatus('success', `✅ Transaction verified! TrxID: ${trxId} — Amount: ৳${total}`);
+                document.getElementById('confirmBtn').disabled = false;
+                document.getElementById('confirmBtn').style.opacity = '1';
+            } else {
+                showVerifyStatus('error', '❌ Transaction not found or amount mismatch. Please check your TrxID.');
+            }
+        }
+
+        function showVerifyStatus(type, msg) {
+            const el = document.getElementById('verifyStatus');
+            el.className = `verify-status ${type}`;
+            el.textContent = msg;
+        }
+
+        // ─── SUCCESS STEP ─────────────────────────────────────────────────────────────
+        function confirmOrder(orderId, total) {
+            const name = document.getElementById('del_name') ? document.getElementById('del_name').value : '';
+            const trxId = document.getElementById('trxInput').value;
+            const address = document.getElementById('del_address') ? document.getElementById('del_address').value : '';
+            const zone = selectedZone;
+            const sub = cartSubtotal();
+            const itemCount = Object.values(cart).reduce((s, i) => s + i.qty, 0);
+
+            document.getElementById('modalTitle').textContent = '✅ Order Confirmed!';
+            document.getElementById('modalBody').innerHTML = `
+        <div class="success-screen">
+            <div class="success-icon">🎉</div>
+            <h2>Order Placed Successfully!</h2>
+            <p>Thank you, <strong>${name}</strong>! Your food is being prepared.</p>
+            <div class="order-id">Order ID: ${orderId}</div>
+            <div class="order-summary-box">
+                <div class="order-summary-row"><span>🧾 Items</span><span>${itemCount} items</span></div>
+                <div class="order-summary-row"><span>🛵 Delivery Zone</span><span>${zone}</span></div>
+                <div class="order-summary-row"><span>📍 Address</span><span style="text-align:right;max-width:200px;font-size:0.85rem">${address}</span></div>
+                <div class="order-summary-row"><span>💳 bKash TrxID</span><span>${trxId}</span></div>
+                <div class="order-summary-row"><span>🚴 Delivery by</span><span>Pathao Courier</span></div>
+                <div class="order-summary-row"><span>⏱️ Est. Time</span><span>45–90 minutes</span></div>
+                <div class="order-summary-row total"><span>Total Paid</span><span>৳${total}</span></div>
+            </div>
+            <p style="color:#888;font-size:0.85rem;margin-top:8px">A Pathao rider will pick up your order shortly. You can track via Pathao app.</p>
+            <button class="btn btn-success" style="margin-top:16px" onclick="resetAll()">🏠 Back to Menu</button>
+        </div>`;
+
+            // Clear cart
+            cart = {};
+            updateCartBadge();
+        }
+
+        function resetAll() {
+            closeModal();
+            currentStep = 'cart';
+        }
+
+        // ─── INIT ────────────────────────────────────────────────────────────────────
+        window.onload = displayMenu;
+    </script>
+</body>
+
+</html>
